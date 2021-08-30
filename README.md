@@ -1,5 +1,8 @@
-# GPTime-Series
-Code used in my masters thesis. We show that a simple MLP can be trained jointly across all time series in the M4 dataset to a score that could have placed second in the M4 forecasting competition. Using a pre-trained model trained jointly on all the time series in the FRED dataset, we can forecast M4 with a score that could have placed 14th. Both of these are far better than the benchmark MLP in the M4 competition. The benchmark used one MLP for each time series and placed 57th of 59.
+# Global Models, Zero-shot Forecasting and Fully Connected Neural Networks
+
+This is repository contains the code for the paper *Global Models, Zero-shot Forecasting and Fully Connected Neural Networks*. We show how simple MLPs can be trained jointly across all time series in the M4 dataset to OWA scores of 0.821 for a per frequency model, and 0.825 for a true global model.
+
+A colab notebook with code to reproduce a single global ensemble member can be found at: https://colab.research.google.com/drive/1ZBpjC0T_vcUDcoz7khjgdbHPN28FlCcS?usp=sharing.
 
 ## Usage
 The GPTime module can be used to download data, preprocess data, train models, evaluate models, and finetune models. The tasks are provided as arguments together with the path of a config file with the arguments for the task. In addition, the scripts in the `scripts`-folder are used to create ensembles and the slurm scripts used to train ensembles using external resources with a slurm worlkload scheduler.
