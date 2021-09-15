@@ -15,7 +15,7 @@ Running `python3 -m GPTime --help` gives the options:
 Usage: __main__.py [OPTIONS]                                                                                         
 Options:                                                                                                             
   --cfg_path TEXT                 [required]                                                                         
-  --task [source|preprocess|train|evaluate|finetune]                                                                 
+  --task [source|preprocess|train|evaluate]                                                                 
                                   Name of task to execute  [required]                                                
   --help                          Show this message and exit. 
 ```
