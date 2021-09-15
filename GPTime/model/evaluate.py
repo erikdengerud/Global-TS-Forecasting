@@ -76,8 +76,3 @@ def evaluate(evaluate_cfg):
         logger.info(d)
         csv_path = os.path.join(evaluate_cfg.model_save_path, "forecast.csv")
         df_all.to_csv(csv_path)
-
-
-
-if __name__ == "__main__":
-    evaluate()

@@ -1,6 +1,3 @@
-"""
-https://github.com/ElementAI/N-BEATS/blob/master/common/torch/losses.py
-"""
 import torch
 
 def divide_non_nan(x: torch.Tensor, y:torch.Tensor) -> torch.Tensor:
@@ -19,19 +16,6 @@ def divide_non_nan(x: torch.Tensor, y:torch.Tensor) -> torch.Tensor:
     res[torch.isinf(res)] = 0.0
     return res
 
-def mape_loss(forecast: torch.Tensor, target: torch.Tensor, tmp1:None, mask:torch.Tensor, tmp2:None) -> torch.Tensor:
-    """Measures the Mean Absolute Percentage Error.
-
-    Args:
-        forecast (torch.Tensor): The forecasted value(s)
-        target (torch.Tensor): The target value(s)
-        mask (torch.Tensor): The mask indicating potentially padded zeros in the forecast.
-
-    Returns:
-        torch.Tensor: The loss.
-    """
-    weights = divide_non_nan(mask, target)
-    return torch.mean(torch.abs(forecast - target) * weights)
  
 def smape_loss(forecast: torch.Tensor, target: torch.Tensor, tmp1:None, mask:torch.Tensor, tmp2:None) -> torch.Tensor:
     """Measures the Symmetric Mean Absolute Percentage Error. https://robjhyndman.com/hyndsight/smape/
@@ -77,33 +61,3 @@ def mase_loss(forecast, target, sample, sample_mask, frequency):
     inv_scaling_masked = divide_non_nan(sample_mask, scaling.unsqueeze(1))
 
     return torch.mean(torch.abs(target - forecast) * inv_scaling_masked)
-
-
-
-
-def owa_loss(forecast, target, sample, sample_mask, frequency):
-    """
-    TODO: This is shady because we don't know the scores of the naive2 forecast of the
-          test set meaning we introduce some bias. We could calculate the naive2 score
-          for a validation set. We can maybe assume it would be similar.
-    """
-    naive2_smape = 13.564
-    naive2_mase = 1.912
-
-    # MASE
-    scaling = []
-
-    for i, row in enumerate(sample):
-        scaling.append(torch.mean(torch.abs(row[frequency[i]:] - row[:-frequency[i]]), dim=0))
-    scaling = torch.tensor(scaling)
-    inv_scaling_masked = divide_non_nan(sample_mask, scaling.unsqueeze(1))
-    torch.mean(torch.abs(target - forecast) * inv_scaling_masked)
-
-    mase = torch.mean(torch.abs(target - forecast) * inv_scaling_masked)
-
-    # SMAPE
-    smape = 200 * torch.mean(divide_non_nan(torch.abs(forecast - target), torch.abs(forecast) + torch.abs(target)))
-
-    owa = 0.5 * smape / naive2_smape + 0.5 * mase / naive2_mase
-
-    return owa

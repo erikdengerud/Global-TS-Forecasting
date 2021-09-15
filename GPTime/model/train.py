@@ -25,17 +25,7 @@ from torch.utils.data import Subset, ConcatDataset
 
 logger = logging.getLogger(__name__)
 
-
-#def smape_2_loss(forecast, target, mask) -> t.float:
-#    """
-#    sMAPE loss as defined in https://robjhyndman.com/hyndsight/smape/ (Makridakis 1993)
-#    :param forecast: Forecast values. Shape: batch, time
-#    :param target: Target values. Shape: batch, time
-#    :param mask: 0/1 mask. Shape: batch, time
-#    :return: Loss value
-#    """
-#    return 200 * t.mean(divide_no_nan(t.abs(forecast - target), t.abs(forecast.data) + t.abs(target.data)) * mask)
-
+# This is a long and messy file 
 
 def train(train_cfg):
     #np.random.seed(1729)
@@ -376,7 +366,3 @@ def train(train_cfg):
         res = score_M4(predictions=preds)
         logger.info(res)
         logger.info("Finished SWA!")
-
-
-if __name__ == "__main__":
-    train()

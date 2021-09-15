@@ -241,15 +241,3 @@ def source_FRED(credentials, small_sample:bool=False, id_freq_list_path:str="") 
 
         logger.info(f"Downloading.")
         download_ids(api_key=credentials.API_KEY_FED.key, sleep_time=cfg.source.api.FRED.sleep, rate_limit=cfg.source.api.FRED.limit)
-
-
-if __name__ == "__main__":
-    import yaml
-    import sys
-    from box import Box
-
-    with open("GPTime/credentials.yml", "r") as ymlfile:
-        credentials = Box(yaml.safe_load(ymlfile))
-
-    # access values from dictionary
-    source_FRED(credentials.FRED, small_sample=False)
